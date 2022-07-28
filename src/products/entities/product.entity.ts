@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Product {
@@ -45,6 +45,11 @@ export class Product {
 
     @BeforeInsert()
     checkSlugInsert() {
+        this.checkSlug()
+    }
+
+    @BeforeUpdate()
+    checkSlugUpdate() {
         this.checkSlug()
     }
 
