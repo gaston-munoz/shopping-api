@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ProductsModule } from './products/products.module';
+import { AppConfiguration } from '../config/app.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      load: [AppConfiguration],
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -14,7 +18,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       password: process.env.POSTGRES_PASSWORD,
       autoLoadEntities: true,
       synchronize: true,
-    })
+    }),
+    ProductsModule
   ],
   controllers: [],
   providers: [],
