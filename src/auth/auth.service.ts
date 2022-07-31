@@ -40,7 +40,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { id: true, email: true, password: true, fullName: true },
+      select: { id: true, email: true, password: true, fullName: true, isActive: true},
     })
 
     if(!user)
@@ -52,6 +52,13 @@ export class AuthService {
     if(!bcrypt.compareSync(password, user.password))
       throw new UnauthorizedException('Email or password incorrect')
   
+    return {
+      ...user,
+      token: this.generateJwt({ id: user.id })
+    }
+  }
+
+  checkToken(user: User) {
     return {
       ...user,
       token: this.generateJwt({ id: user.id })

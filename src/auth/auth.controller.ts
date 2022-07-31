@@ -28,14 +28,11 @@ export class AuthController {
     return this.authService.loginUser(loginUserDto)
   }
 
-  @Get('private')
+  @Post('check-auth-status')
   @Auth()
-  privateRoute(
-    @GetUser('email') user: User,
-    @GetRawHeaders() rawHeaders: string[],
+  checkAuthStatus(
+    @GetUser() user: User
   ) {
-    return {
-      success: true,
-    }
+    return this.authService.checkToken(user)
   }
 }
