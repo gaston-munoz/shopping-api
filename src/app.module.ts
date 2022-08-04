@@ -23,6 +23,9 @@ import { MessageWsModule } from './message-ws/message-ws.module';
       password: process.env.POSTGRES_PASSWORD,
       autoLoadEntities: true,
       synchronize: true,
+      ssl: process.env.STAGE === 'prod',
+      extra: {
+        ssl: process.env.STAGE === 'prod' ? { rejectUnauthorized: false } : null}
     }),
     ProductsModule,
     CommonModule,
